@@ -2,6 +2,8 @@
 
 This application will help the Shan, the gorilla king of the Space kingdom to send secret message to all Six Kingdoms in the universe of Southeros to get their support and rule over them
 
+This is the solution of the coding challenge provided by geektrust
+
 ## CREATE THE VIRTUAL ENV
 
 ```
