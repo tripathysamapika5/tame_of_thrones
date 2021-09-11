@@ -18,15 +18,11 @@ def main():
         #creating utility object
         utility = Utilities()
         message_validation_utility_obj = Message_Validation_Util(utility)
-        
-        # Fetching the properties
-        properties = utility.read_config_properties(section_name = 'TAME OF THRONES')
-        
+               
         #fetching testfile path
         input_file_abs_path = utility.fetch_input_file_path_from_cli(sys.argv)
         
         #Getting the valid kingdoms where support was received
-        
         valid_kingdoms = message_validation_utility_obj.find_valid_kingdoms_from_input_file(input_file_abs_path)
         
         print(valid_kingdoms)
