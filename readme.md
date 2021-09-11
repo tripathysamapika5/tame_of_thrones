@@ -4,7 +4,9 @@ This application will help the Shan, the gorilla king of the Space kingdom to se
 
 ## CREATE THE VIRTUAL ENV
 
+```
 python3 -m venv kingdom
+```
 
 ## ACTIVATE THE VIRTUAL ENV
 
