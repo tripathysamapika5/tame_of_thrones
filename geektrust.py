@@ -10,43 +10,24 @@ sys.path.append(project_dir)
 import logging
 from src.utils.utils import Utilities
 from src.exceptions.exceptions import CommandLineArgumentNotAvailable, InvalidFilePath
-from src.message.message import Message
-
+from src.utils.message_validation_util import Message_Validation_Util
 
 def main():
     
     try:
         #creating utility object
         utility = Utilities()
+        message_validation_utility_obj = Message_Validation_Util(utility)
         
         # Fetching the properties
         properties = utility.read_config_properties(section_name = 'TAME OF THRONES')
         
         #fetching testfile path
-        if len(sys.argv) < 2 :
-            raise CommandLineArgumentNotAvailable
-        else:
-            input_file_abs_path = sys.argv[1]
-            if not os.path.exists(input_file_abs_path):
-                raise InvalidFilePath
+        input_file_abs_path = utility.fetch_input_file_path_from_cli(sys.argv)
         
+        #Getting the valid kingdoms where support was received
         
-        
-        lines = utility.read_file_to_list_of_lines(input_file_abs_path)
-        valid_kingdoms_list = []
-        for line in lines:
-            kingdom, message = line.split(" ")[0], " ".join(line.split(" ")[1:]).lower()
-            message_obj = Message(kingdom, message)
-            
-            if message_obj.is_valid():
-                valid_kingdoms_list.append(kingdom)
-        
-        # Check the allias it got
-        if len(valid_kingdoms_list) >= 3:
-            valid_kingdoms_list.insert(0, properties.get('message.sender.kingdom'))
-            valid_kingdoms = " ".join(valid_kingdoms_list)
-        else:
-            valid_kingdoms = None
+        valid_kingdoms = message_validation_utility_obj.find_valid_kingdoms_from_input_file(input_file_abs_path)
         
         print(valid_kingdoms)
     

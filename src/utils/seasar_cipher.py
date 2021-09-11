@@ -1,6 +1,6 @@
+
 from src.utils.datatype import CircularArray
 from src.utils.utils import Utilities
-
 
 class SeasarCipher:
     

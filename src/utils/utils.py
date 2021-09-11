@@ -1,6 +1,7 @@
 import configparser
 import os 
 import string
+from src.exceptions.exceptions import CommandLineArgumentNotAvailable, InvalidFilePath
 
 
 class Utilities:
@@ -41,6 +42,11 @@ class Utilities:
     def get_kingdom_to_emblame_mapping(self):
         properties = self.read_config_properties(section_name = 'TAME OF THRONES')
         return properties.get('kingdom.to.emblame.mapping')
+
+    def get_message_sender_name(self):
+        properties = self.read_config_properties(section_name = 'TAME OF THRONES')
+        return properties.get('message.sender.kingdom')
+
     
     def read_file_to_list_of_lines(self, file_path):
         with open(file_path) as f:
@@ -64,3 +70,23 @@ class Utilities:
             return default
         
         return value
+
+    def fetch_input_file_path_from_cli(self, cli_args):
+        if len(cli_args) < 2 :
+            raise CommandLineArgumentNotAvailable
+        else:
+            input_file_abs_path = cli_args[1]
+            if not os.path.exists(input_file_abs_path):
+                raise InvalidFilePath 
+            
+        return input_file_abs_path    
+    
+    def get_unique_iterable(self, iterable):  
+        unique_iterable = []
+        for item in  iterable:
+            if not item in unique_iterable:
+                unique_iterable.append(item)
+        return unique_iterable
+            
+
+        
