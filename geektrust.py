@@ -33,22 +33,22 @@ def main():
         
         
         lines = utility.read_file_to_list_of_lines(input_file_abs_path)
-        valid_kingdoms = []
+        valid_kingdoms_list = []
         for line in lines:
             kingdom, message = line.split(" ")[0], " ".join(line.split(" ")[1:]).lower()
             message_obj = Message(kingdom, message)
             
             if message_obj.is_valid():
-                valid_kingdoms.append(kingdom)
+                valid_kingdoms_list.append(kingdom)
         
         # Check the allias it got
-        if len(valid_kingdoms) >= 3:
-            valid_kingdoms.insert(0, properties.get('message.sender.kingdom'))
+        if len(valid_kingdoms_list) >= 3:
+            valid_kingdoms_list.insert(0, properties.get('message.sender.kingdom'))
+            valid_kingdoms = " ".join(valid_kingdoms_list)
         else:
-            valid_kingdoms = []
+            valid_kingdoms = None
         
         print(valid_kingdoms)
-        return valid_kingdoms
     
     except CommandLineArgumentNotAvailable:
         logging.exception("Input file path is not provided.. \nplease run the code with input file path as first argument..")
